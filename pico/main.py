@@ -4,7 +4,9 @@ from file import FsHandler
 import machine
 import time
 import _thread
+import ntptime
     
+
 
 UARTx = 0
 # define the rp2040 uart baudrate , the default baudrate is 9600 of L76B
@@ -26,6 +28,13 @@ wifiTools = WifiTools('Mamanet', 'HuboBubo22')
 cfg = wifiTools.client_create()
 ip = cfg[0]
 print(f"Client ip obtained from AP: {ip}")
+
+try:
+    ntptime.settime()
+except:
+    print("Error syncing time")
+
+
 while True:
     upload = client_handler(fs)
     print(f"Upload: {upload}")
